@@ -33,5 +33,15 @@ loop:
 
     OUT     PORTC,  r20
 
+    ; Guardar el dato en memoria 
+    ; STS     0x0100, r20
+
+    ; ; Leer dato desde memoria
+    ; LDS     r21,    0x0100
+    ; OUT     PORTC,  r21
+    ; OUT     PORTC,  r16
+    
+    ; STS     0x0100, r16
+
     RJMP    loop
 

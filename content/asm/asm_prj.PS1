@@ -12,7 +12,10 @@ $asmContent = @"
 
     .org(0x0000)
     RJMP    main
-
+    
+/*
+Definición: 
+*/
 main:
     ; Código aquí 🤗
 
