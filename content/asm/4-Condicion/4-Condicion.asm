@@ -32,7 +32,7 @@ loop:
     ANDI    r17,    0xF0
     SWAP    r17
 
-    ; Condicionales branch para decidir
+    ; Condicionales branch para decidir, la diferencia con el RJMP, es que en el primero se tiene en cuenta las banderas de estado.
     CPI     r18,    0
     BREQ    sumar
 
