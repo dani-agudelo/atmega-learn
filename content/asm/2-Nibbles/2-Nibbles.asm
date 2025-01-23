@@ -52,7 +52,7 @@ loop:
     
 
     RJMP    loop
-; Nota: Se puede usar un XOR para negar un patrón específico
-; 1010 1010
-; 1100 1100
-; 0110 0110
+; Nota: Se puede usar un XOR para negar un patrón específico. El 1 que se aplica, niega el origen
+; 1010 1010   origen
+; 1100 1100   aplicamos este
+; 0110 0110   resultado
