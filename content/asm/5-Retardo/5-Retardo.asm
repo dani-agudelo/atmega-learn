@@ -2,9 +2,10 @@
 
     .org(0x0000)
     RJMP    main
-    
+
 /*
-Definición: Programa que cada segundo muestra un contador binario. Mostrar por el puerto K
+Definición: Programa que cada segundo muestra un contador binario. Mostrar por el puerto K.
+Buscamos que haya un retardo, la lógica es que la máquina haga operaciones para "matar el tiempo" antes de ir al siguiente loop.
 */
 main:
     ; Configuramos los puertos de salida (1)
@@ -12,7 +13,8 @@ main:
     STS     DDRK,   r24     ;? Ya no se usa OUT, sino STS
 loop:
     ; Mostramos el contador
-    ADIW    r24,    1
+    ; ADIW    r24,    1
+    INC     r24
     STS     PORTK,  r24
     LDI     r25,    0xFF
     LDI     r26,    0x46
@@ -23,11 +25,12 @@ delay:
     ; Operaciones que se ejecuten en un segundo
     ; Contador que pare cuando llegue a cero
     ; * En microcontroladores, es más fácil hacer un contador descendente
-    SUBI    r25,    1  
+    ; SUBI    r25,    1
+    DEC     r25
 
-    CPI     r25,    0  
-    BREQ    loop  
-    RJMP    delay   
+    CPI     r25,    0
+    BREQ    loop
+    RJMP    delay
 
 ciclo:
     SUBI    r26,    1   ; tener en cuenta: se debe reiniciar según Nubia
