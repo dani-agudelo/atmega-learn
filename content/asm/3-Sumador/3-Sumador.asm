@@ -3,7 +3,7 @@
     .org(0x0000)
     RJMP    main
 /*
-Programa que recibe un primer dato y un segundo dato de 4 bits por un mismo pin -A, y mostrará el resultado de la suma por el puerto C. El resultado se almacena en la memoria RAM y se lee para mostrarse.
+Definición: Programa que recibe un primer dato y un segundo dato de 4 bits por un mismo pin -A, y mostrará el resultado de la suma por el puerto C. El resultado se almacena en la memoria RAM y se lee para mostrarse.
 */
 main:
     ; Configurar las entradas y salidas

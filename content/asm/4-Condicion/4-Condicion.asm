@@ -4,7 +4,7 @@
     RJMP    main
 
 /*
-Definición: Programa que con dos datos de 4 bits cada uno de los pines de A, y una entrada de 8 bits por el pin B con la que decide si aplica operaciones aritméticas.
+Definición: Programa que tiene dos datos de 4 bits cada uno de los pines de A, y una entrada de 8 bits por el pin B con la que decide si aplica operaciones aritméticas.
 00: Suma
 01: Resta
 10: Producto

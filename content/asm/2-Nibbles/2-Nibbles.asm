@@ -3,7 +3,7 @@
     .org(0x0000)
     RJMP    main
 /*
-Programa que almacena tres datos en tres registros y aplica operaciones booleanas entre ellos.
+Definición: Programa que almacena tres datos en tres registros y aplica operaciones booleanas entre ellos.
 */
 main:
     ; Cargar 1010 1010 en r18
@@ -12,7 +12,7 @@ main:
     LDI r19,    0xCC
     ; Cargar 1111 0000
     LDI r20,    0xF0
-    ; Seteo de salida
+    ; Seteo de salida (1)
     LDI r21,    0xFF
     OUT DDRC,   r21
 
@@ -24,7 +24,7 @@ loop:
 
     ; Guardar lo de r19 en r22
     MOV r22,    r19
-    ; operación and entre r19 - r20
+    ; Operación AND entre r19 - r20
     AND r22,    r20
 
     ; Guardar registro r18
