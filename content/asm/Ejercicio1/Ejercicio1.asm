@@ -6,17 +6,17 @@
 main:
     ; Código aquí 🤗
 
-    ; Configurar el puerto B como salida (1)
+    ; Configurar el puerto C como salida (1)
     LDI R16,    0xFF
     OUT DDRC,   R16
 
-    ; Configurar el puerto C como entrada (0)
+    ; Configurar el puerto B como entrada (0)
     LDI R16,    0x00
     OUT DDRB,   R16
 
 
 loop:
-    ; Leer del puerto C el valor
+    ; Leer del puerto B el valor
     IN  R16,    PINB
     ANDI    R16,    0b00000011;      Limpiar los bits que no nos interesan
    
@@ -96,8 +96,3 @@ L1: DEC  R20
     BRNE L1
     ret
 
-/**
-DDR --> Configurar el puerto como entrada o salida
-PORT --> Escribir en el puerto
-PIN --> Leer del puerto
-**/

@@ -1,0 +1,35 @@
+<ASSEMBLER_INFO>
+ <VERSION>2.2.8</VERSION>
+ <DEVICE>"ATmega2560"</DEVICE>
+ <WORKING_DIR>C:\Users\USUARIO\Documents\Universidad\Septimo Semestre\Micros\2560-2025\content\asm\Ejercicio1</WORKING_DIR>
+ <INCLUDE_PATH>
+  <DIR>C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.7.374/avrasm/inc</DIR>
+  <DIR>C:/Program Files (x86)/Atmel/Studio/7.0/toolchain/avr8/avrassembler/Include</DIR>
+  <DIR></DIR>
+ </INCLUDE_PATH>
+ <SOURCE_FILE>Ejercicio1.asm</SOURCE_FILE>
+ <INCLUDED_FILES>
+  <FILE>C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.7.374/avrasm/inc\m2560def.inc</FILE>
+ </INCLUDED_FILES>
+ <OBJECT_FILES>
+  <FILE>Ejercicio1.obj</FILE>
+ </OBJECT_FILES>
+ <HEX_FILES>
+  <FILE>Ejercicio1.hex</FILE>
+ </HEX_FILES>
+ <OUTPUT_FILES>
+  <FILE>Ejercicio1.map</FILE>
+  <FILE>Ejercicio1.lss</FILE>
+ </OUTPUT_FILES>
+ <LABELS>
+  <main><FILE>Ejercicio1.asm</FILE><LINE>6</LINE></main>
+  <loop><FILE>Ejercicio1.asm</FILE><LINE>18</LINE></loop>
+  <parpadeo_leds><FILE>Ejercicio1.asm</FILE><LINE>35</LINE></parpadeo_leds>
+  <centro_fuera><FILE>Ejercicio1.asm</FILE><LINE>44</LINE></centro_fuera>
+  <izquierda_derecha><FILE>Ejercicio1.asm</FILE><LINE>69</LINE></izquierda_derecha>
+  <DELAY><FILE>Ejercicio1.asm</FILE><LINE>87</LINE></DELAY>
+  <derecha><FILE>Ejercicio1.asm</FILE><LINE>71</LINE></derecha>
+  <izquierda><FILE>Ejercicio1.asm</FILE><LINE>78</LINE></izquierda>
+  <L1><FILE>Ejercicio1.asm</FILE><LINE>91</LINE></L1>
+ </LABELS>
+</ASSEMBLER_INFO>

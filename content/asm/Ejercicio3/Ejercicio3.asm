@@ -1,16 +1,17 @@
 .include "m2560def.inc"
 
-.org 0x0000
-RJMP main
+    .org 0x0000
+    RJMP main
 
 main:
     ; Configurar el puerto B como entrada (0)
     LDI R16, 0x00
     OUT DDRB, R16
 
-    ; Configurar los 4 bits menos significativos del puerto D como salida y los 2 bits más significativos como entrada 0 1111
+    ; Configurar los 4 bits menos significativos del puerto C como salida y los 2 bits más significativos como entrada 0 1111
+    ; Nota: En el taller decía que se usara D pero se usará C ya que no encontré en Proteus el puerto D6
     LDI R16, 0x0F
-    OUT DDRD, R16
+    OUT DDRC, R16
 
 loop:
     ; Leer los datos de 4 bits del puerto B   
@@ -23,11 +24,21 @@ loop:
     SWAP R18       ; Intercambiar los 4 bits altos y bajos       
     ANDI R18, 0x0F ; Segundo dato en los 4 bits menos significativos    
 
-   ; Leer los 2 bits más significativos del puerto D (PD6 y PD7)
-    IN R19, PIND
-    SWAP R19        ; Intercambiar los 4 bits altos y bajos
-    LSR R19         ; 1100 -> 0110 
-    LSR R19         ; 0110 -> 0011 
+   ; Leer los 2 bits más significativos del puerto C 
+    IN R19, PINC
+    ANDI R19, 0xC0 ; Aislar los 2 bits más significativos (1100 0000)
+    LSR R19        ; Desplazar a la derecha 6 veces para obtener los 2 bits en los bits 0 y 1
+    LSR R19
+    LSR R19
+    LSR R19
+    LSR R19
+    LSR R19
+
+;    ; Leer los 2 bits más significativos del puerto C 
+;     IN R19, PINC
+;     SWAP R19        ; Intercambiar los 4 bits altos y bajos
+;     LSR R19         ; 1100 -> 0110 
+;     LSR R19         ; 0110 -> 0011 
       
 
     ; Realizar la operación
@@ -56,9 +67,9 @@ or_op:
     OR R17, R18
 
 mostrar_resultado:
-    ; Mostrar el resultado en los 4 bits menos significativos del puerto D
+    ; Mostrar el resultado en los 4 bits menos significativos del puerto C
     ANDI R17, 0x0F
-    OUT PORTD, R17
+    OUT PORTC, R17
     RJMP loop
 
 

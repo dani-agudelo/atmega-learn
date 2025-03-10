@@ -1,7 +1,7 @@
 .include "m2560def.inc"
 
-.org 0x0000
-RJMP main
+    .org 0x0000
+    RJMP main
 
 main:
     ; Configurar el puerto B como salida (1)
@@ -18,10 +18,19 @@ loop:
 
     ; Mostrar el nivel en la barra de LEDs (4 bits menos significativos)
     ANDI R16, 0x0F
-    OUT PORTB, R16   ; Mostramos el nivel en los LEDs   00000111
+    OUT PORTB, R16   
 
     ; Controlar la bomba de agua
     CPI R16, 0x00 ; Nivel mínimo
+    BREQ bomba_encendida
+
+    CPI R16, 0x01 ; Nivel medio
+    BREQ bomba_encendida
+
+    CPI R16, 0x03 ; Nivel alto
+    BREQ bomba_encendida
+
+    CPI R16, 0x07 ; Nivel muy alto
     BREQ bomba_encendida
 
     CPI R16, 0x0F ; Nivel máximo
@@ -59,9 +68,5 @@ L1: DEC R20
     BRNE L1
     RET
 
-2. Se debe realizar el control de un depósito de agua de forma que el nivel del depósito está
-indicado mediante 4 sensores conectados al puerto C. El nivel se visualizará mediante una
-barra de 4 leds conectada al puerto B. Además al llegar al nivel mínimo se debe poner en
-marcha una bomba de agua, esto se observará en un led. Al llegar al nivel máximo la bomba
-debe parar y se debe indicar por medio de un led parpadeante.
+
 
