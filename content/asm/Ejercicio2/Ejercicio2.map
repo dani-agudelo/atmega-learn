@@ -1,5 +1,5 @@
 
-AVRASM ver. 2.2.8  Ejercicio2.asm Sun Mar 09 23:04:29 2025
+AVRASM ver. 2.2.8  Ejercicio2.asm Mon Mar 10 19:52:10 2025
 
 
 EQU  SIGNATURE_000 0000001e
@@ -1360,11 +1360,12 @@ EQU  UDRE3addr    0000006e
 EQU  UTXC3addr    00000070
 EQU  INT_VECTORS_SIZE 00000072
 CSEG main         00000001
-CSEG loop         00000007
-CSEG nivel_bajo   00000017
-CSEG bomba_apagada 0000001b
-CSEG bomba_encendida 00000018
-CSEG continuar    0000001f
-CSEG parpadear_led 00000021
-CSEG DELAY        00000026
-CSEG L1           00000029
+CSEG loop         00000006
+CSEG set_bajando  00000012
+CSEG set_subiendo 00000010
+CSEG check_bomba_encendida 00000014
+CSEG bomba_apagada 0000001f
+CSEG bomba_encendida 0000001d
+CSEG parpadear_led 00000023
+CSEG DELAY        00000028
+CSEG l1           0000002b

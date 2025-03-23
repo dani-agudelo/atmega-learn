@@ -35,34 +35,34 @@ loop:
 parpadeo_leds:
     LDI R17,    0xFF ; tambien se puede SER R17
     OUT PORTC,  R17; Encender todos los leds
-    RCALL   DELAY
+    RCALL   delay
     LDI R17,    0x00
     OUT PORTC,  R17; Apagar todos los leds
-    RCALL   DELAY
+    RCALL   delay
     RJMP    loop;
 
 centro_fuera:
     LDI R20,    0x18;   0001 1000
     OUT PORTC,  R20
-    RCALL   DELAY
+    RCALL   delay
     LDI R20, 0x24 ; 0010 0100
     OUT PORTC, R20
-    RCALL DELAY
+    RCALL delay
     LDI R20, 0x42 ; 0100 0010
     OUT PORTC, R20
-    RCALL DELAY
+    RCALL delay
     LDI R20, 0x81 ; 1000 0001
     OUT PORTC, R20
-    RCALL DELAY
+    RCALL delay
     LDI R20, 0x42 ; 0100 0010
     OUT PORTC, R20
-    RCALL DELAY
-    LDI R20, 0x24 ; 0010 0100
+    RCALL delay
+    LDI R20, 0x24 ; 00delay00
     OUT PORTC, R20
-    RCALL DELAY
+    RCALL delay
     LDI R20, 0x18 ; 0001 1000
     OUT PORTC, R20
-    RCALL DELAY
+    RCALL delay
     
     RJMP loop ; Volver al bucle principal para verificar el valor del puerto C
 
@@ -70,7 +70,7 @@ izquierda_derecha:
     LDI R21, 0x80 ; 1000 0000  0100 0000   0010 0000   0001 0000   0000 1000   0000 0100   0000 0010   0000 0001  0000 0000
 derecha:
     OUT PORTC, R21
-    RCALL DELAY
+    RCALL delay
     LSR R21
     BRNE derecha
 
@@ -81,18 +81,18 @@ izquierda:
     LSL R21
     CPI R21, 0x00 ; Se debe comparar con 0x00 porque la bandera Z 
     BRNE izquierda
-
+    
     RJMP loop
 
-DELAY:
-    LDI  R18, 41
-    LDI  R19, 150
-    LDI  R20, 128
-L1: DEC  R20
-    BRNE L1
-    DEC  R19
-    BRNE L1
-    DEC  R18
-    BRNE L1
+delay:
+    ldi  r18, 41
+    ldi  r19, 150
+    ldi  r20, 128
+l1: dec  r20
+    brne L1
+    dec  r19
+    brne L1
+    dec  r18
+    brne L1
     ret
 

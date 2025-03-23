@@ -1,5 +1,5 @@
 
-AVRASM ver. 2.2.8  Ejercicio2.asm Sun Mar 09 23:04:29 2025
+AVRASM ver. 2.2.8  Ejercicio2.asm Mon Mar 10 19:52:10 2025
 
 [builtin](2): Including file 'C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.7.374/avrasm/inc\m2560def.inc'
 Ejercicio2.asm(1): Including file 'C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.7.374/avrasm/inc\m2560def.inc'
@@ -1900,79 +1900,86 @@ Ejercicio2.asm(1): Including file 'C:/Program Files (x86)/Atmel/Studio/7.0/Packs
 000003 e000                          LDI R16, 0x00
 000004 b907                          OUT DDRC, R16
                                  
-                                     ; Inicializar variables
-000005 e010                          LDI R17, 0x00   ; Estado anterior del nivel de agua
-000006 e020                          LDI R18, 0x00   ; Estado de la bomba (0 = apagada, 1 = encendida)
+                                     ; Inicializar estado (0 = bajando, 1 = subiendo)
+000005 e010                          LDI R17, 0x00  ; Estado inicial: bajando
                                  
                                  loop:
                                      ; Leer el nivel del depósito desde el puerto C
-000007 b106                          IN R16, PINC   ; Leer sensores
+000006 b106                          IN R16, PINC   ; 00001111
                                  
-                                     ; Mostrar el nivel en la barra de LEDs
-000008 700f                          ANDI R16, 0x0F
-000009 b905                          OUT PORTB, R16   
+                                     ; Mostrar el nivel en la barra de LEDs (4 bits menos significativos)
+000007 700f                          ANDI R16, 0x0F
+000008 b905                          OUT PORTB, R16   
                                  
-                                     ; Verificar si el nivel subió
-00000a 1701                          CP R16, R17       ; Comparar con el estado anterior
-00000b f058                          BRLO nivel_bajo   ; Si el nivel bajó, no encender la bomba
+                                     ; Determinar si el nivel está subiendo o bajando
+000009 300f                          CPI R16, 0x0F   ; ¿Nivel máximo?
+00000a f039                          BREQ set_bajando
                                  
-                                     ; Encender la bomba si el nivel está subiendo y es menor que el máximo
-00000c 300f                          CPI R16, 0x0F     ; Si es 1111 (nivel máximo), apagar la bomba
-00000d f069                          BREQ bomba_apagada
+00000b 3000                          CPI R16, 0x00   ; ¿Nivel mínimo?
+00000c f019                          BREQ set_subiendo
                                  
-00000e 3000                          CPI R16, 0x00     ; Si está en 0000 (nivel mínimo), encender la bomba
-00000f f041                          BREQ bomba_encendida
+                                     ; Control de la bomba según el estado
+00000d 3011                          CPI R17, 0x01  ; Si está subiendo
+00000e f029                          BREQ check_bomba_encendida
                                  
-000010 3001                          CPI R16, 0x01
-000011 f031                          BREQ bomba_encendida
+                                     ; Si está bajando, la bomba debe estar apagada
+00000f c00f                          RJMP bomba_apagada
                                  
-000012 3003                          CPI R16, 0x03
-000013 f021                          BREQ bomba_encendida
+                                 set_subiendo:
+000010 e011                          LDI R17, 0x01   ; Cambiar estado a subiendo
+000011 c00b                          RJMP bomba_encendida
                                  
-000014 3007                          CPI R16, 0x07
-000015 f011                          BREQ bomba_encendida
+                                 set_bajando:
+000012 e010                          LDI R17, 0x00   ; Cambiar estado a bajando
+000013 c00b                          RJMP bomba_apagada
                                  
-000016 c008                          RJMP continuar
+                                 check_bomba_encendida:
+                                     ; La bomba solo se enciende en 0000, 0001, 0011, 0111 si está subiendo
+000014 3000                          CPI R16, 0x00
+000015 f039                          BREQ bomba_encendida
                                  
-                                 nivel_bajo:
-                                     ; Si el nivel bajó, no hacer nada y mantener el estado actual de la bomba
-000017 c007                          RJMP continuar
+000016 3001                          CPI R16, 0x01
+000017 f029                          BREQ bomba_encendida
+                                 
+000018 3003                          CPI R16, 0x03
+000019 f019                          BREQ bomba_encendida
+                                 
+00001a 3007                          CPI R16, 0x07
+00001b f009                          BREQ bomba_encendida
+                                 
+00001c c002                          RJMP bomba_apagada
                                  
                                  bomba_encendida:
-000018 e021                          LDI R18, 0x01  ; Guardar que la bomba está encendida
-000019 9a2c                          SBI PORTB, 4   ; Encender LED de la bomba
-00001a c004                          RJMP continuar
+00001d 9a2c                          SBI PORTB, 4   ; Encender bomba (LED en PB4)
+00001e cfe7                          RJMP loop
                                  
                                  bomba_apagada:
-00001b e020                          LDI R18, 0x00  ; Guardar que la bomba está apagada
-00001c 982c                          CBI PORTB, 4   ; Apagar LED de la bomba
-00001d d003                          RCALL parpadear_led
-00001e c000                          RJMP continuar
+00001f 982c                          CBI PORTB, 4   ; Apagar bomba (LED en PB4)
                                  
-                                 continuar:
-                                     ; Guardar el estado actual del nivel de agua
-00001f 2f10                          MOV R17, R16
+                                     ; Si el nivel es 1111, parpadear LED de indicación en PB5
+000020 300f                          CPI R16, 0x0F
+000021 f009                          BREQ parpadear_led
                                  
-000020 cfe6                          RJMP loop
+000022 cfe3                          RJMP loop
                                  
                                  parpadear_led:
-000021 9a2d                          SBI PORTB, 5
-000022 d003                          RCALL DELAY
-000023 982d                          CBI PORTB, 5
-000024 d001                          RCALL DELAY
-000025 9508                          RET
+000023 9a2d                          SBI PORTB, 5
+000024 d003                          RCALL DELAY
+000025 982d                          CBI PORTB, 5
+000026 d001                          RCALL DELAY
+000027 cfde                          RJMP loop
                                  
-                                 DELAY:
-000026 e239                          LDI R19, 41
-000027 e946                          LDI R20, 150
-000028 e850                          LDI R21, 128
-000029 955a                      L1: DEC R21
-00002a f7f1                          BRNE L1
-00002b 954a                          DEC R20
-00002c f7e1                          BRNE L1
-00002d 953a                          DEC R19
-00002e f7d1                          BRNE L1
-00002f 9508                          RET
+                                 delay:
+000028 e229                          ldi  r18, 41
+000029 e936                          ldi  r19, 150
+00002a e840                          ldi  r20, 128
+00002b 954a                      l1: dec  r20
+00002c f7f1                          brne L1
+00002d 953a                          dec  r19
+00002e f7e1                          brne L1
+00002f 952a                          dec  r18
+000030 f7d1                          brne L1
+000031 9508                          ret
 
 
 RESOURCE USE INFORMATION
@@ -1992,38 +1999,38 @@ counted separately from r26..r31 here.
 "ATmega2560" register use summary:
 x  :   0 y  :   0 z  :   0 r0 :   0 r1 :   0 r2 :   0 r3 :   0 r4 :   0 
 r5 :   0 r6 :   0 r7 :   0 r8 :   0 r9 :   0 r10:   0 r11:   0 r12:   0 
-r13:   0 r14:   0 r15:   0 r16:  14 r17:   3 r18:   3 r19:   2 r20:   2 
-r21:   2 r22:   0 r23:   0 r24:   0 r25:   0 r26:   0 r27:   0 r28:   0 
+r13:   0 r14:   0 r15:   0 r16:  14 r17:   4 r18:   2 r19:   2 r20:   2 
+r21:   0 r22:   0 r23:   0 r24:   0 r25:   0 r26:   0 r27:   0 r28:   0 
 r29:   0 r30:   0 r31:   0 
-Registers used: 6 out of 35 (17.1%)
+Registers used: 5 out of 35 (14.3%)
 
 "ATmega2560" instruction use summary:
 .lds  :   0 .sts  :   0 adc   :   0 add   :   0 adiw  :   0 and   :   0 
 andi  :   1 asr   :   0 bclr  :   0 bld   :   0 brbc  :   0 brbs  :   0 
-brcc  :   0 brcs  :   0 break :   0 breq  :   5 brge  :   0 brhc  :   0 
-brhs  :   0 brid  :   0 brie  :   0 brlo  :   1 brlt  :   0 brmi  :   0 
+brcc  :   0 brcs  :   0 break :   0 breq  :   8 brge  :   0 brhc  :   0 
+brhs  :   0 brid  :   0 brie  :   0 brlo  :   0 brlt  :   0 brmi  :   0 
 brne  :   3 brpl  :   0 brsh  :   0 brtc  :   0 brts  :   0 brvc  :   0 
 brvs  :   0 bset  :   0 bst   :   0 call  :   0 cbi   :   2 cbr   :   0 
 clc   :   0 clh   :   0 cli   :   0 cln   :   0 clr   :   0 cls   :   0 
-clt   :   0 clv   :   0 clz   :   0 com   :   0 cp    :   1 cpc   :   0 
-cpi   :   5 cpse  :   0 dec   :   3 eicall:   0 eijmp :   0 elpm  :   0 
+clt   :   0 clv   :   0 clz   :   0 com   :   0 cp    :   0 cpc   :   0 
+cpi   :   8 cpse  :   0 dec   :   3 eicall:   0 eijmp :   0 elpm  :   0 
 eor   :   0 fmul  :   0 fmuls :   0 fmulsu:   0 icall :   0 ijmp  :   0 
-in    :   1 inc   :   0 jmp   :   0 ld    :   0 ldd   :   0 ldi   :   9 
-lds   :   0 lpm   :   0 lsl   :   0 lsr   :   0 mov   :   1 movw  :   0 
+in    :   1 inc   :   0 jmp   :   0 ld    :   0 ldd   :   0 ldi   :   8 
+lds   :   0 lpm   :   0 lsl   :   0 lsr   :   0 mov   :   0 movw  :   0 
 mul   :   0 muls  :   0 mulsu :   0 neg   :   0 nop   :   0 or    :   0 
-ori   :   0 out   :   3 pop   :   0 push  :   0 rcall :   3 ret   :   2 
-reti  :   0 rjmp  :   6 rol   :   0 ror   :   0 sbc   :   0 sbci  :   0 
+ori   :   0 out   :   3 pop   :   0 push  :   0 rcall :   2 ret   :   1 
+reti  :   0 rjmp  :   8 rol   :   0 ror   :   0 sbc   :   0 sbci  :   0 
 sbi   :   2 sbic  :   0 sbis  :   0 sbiw  :   0 sbr   :   0 sbrc  :   0 
 sbrs  :   0 sec   :   0 seh   :   0 sei   :   0 sen   :   0 ser   :   0 
 ses   :   0 set   :   0 sev   :   0 sez   :   0 sleep :   0 spm   :   0 
 st    :   0 std   :   0 sts   :   0 sub   :   0 subi  :   0 swap  :   0 
 tst   :   0 wdr   :   0 
-Instructions used: 16 out of 116 (13.8%)
+Instructions used: 13 out of 116 (11.2%)
 
 "ATmega2560" memory use summary [bytes]:
 Segment   Begin    End      Code   Data   Used    Size   Use%
 ---------------------------------------------------------------
-[.cseg] 0x000000 0x000060     96      0     96  262144   0.0%
+[.cseg] 0x000000 0x000064    100      0    100  262144   0.0%
 [.dseg] 0x000200 0x000200      0      0      0    8192   0.0%
 [.eseg] 0x000000 0x000000      0      0      0    4096   0.0%
 

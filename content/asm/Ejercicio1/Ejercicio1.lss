@@ -1,5 +1,5 @@
 
-AVRASM ver. 2.2.8  Ejercicio1.asm Sun Mar 09 19:39:22 2025
+AVRASM ver. 2.2.8  Ejercicio1.asm Mon Mar 10 19:58:45 2025
 
 [builtin](2): Including file 'C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.7.374/avrasm/inc\m2560def.inc'
 Ejercicio1.asm(1): Including file 'C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.7.374/avrasm/inc\m2560def.inc'
@@ -1923,34 +1923,34 @@ Ejercicio1.asm(1): Including file 'C:/Program Files (x86)/Atmel/Studio/7.0/Packs
                                  parpadeo_leds:
 00000e ef1f                          LDI R17,    0xFF ; tambien se puede SER R17
 00000f b918                          OUT PORTC,  R17; Encender todos los leds
-000010 d026                          RCALL   DELAY
+000010 d026                          RCALL   delay
 000011 e010                          LDI R17,    0x00
 000012 b918                          OUT PORTC,  R17; Apagar todos los leds
-000013 d023                          RCALL   DELAY
+000013 d023                          RCALL   delay
 000014 cff0                          RJMP    loop;
                                  
                                  centro_fuera:
 000015 e148                          LDI R20,    0x18;   0001 1000
 000016 b948                          OUT PORTC,  R20
-000017 d01f                          RCALL   DELAY
+000017 d01f                          RCALL   delay
 000018 e244                          LDI R20, 0x24 ; 0010 0100
 000019 b948                          OUT PORTC, R20
-00001a d01c                          RCALL DELAY
+00001a d01c                          RCALL delay
 00001b e442                          LDI R20, 0x42 ; 0100 0010
 00001c b948                          OUT PORTC, R20
-00001d d019                          RCALL DELAY
+00001d d019                          RCALL delay
 00001e e841                          LDI R20, 0x81 ; 1000 0001
 00001f b948                          OUT PORTC, R20
-000020 d016                          RCALL DELAY
+000020 d016                          RCALL delay
 000021 e442                          LDI R20, 0x42 ; 0100 0010
 000022 b948                          OUT PORTC, R20
-000023 d013                          RCALL DELAY
-000024 e244                          LDI R20, 0x24 ; 0010 0100
+000023 d013                          RCALL delay
+000024 e244                          LDI R20, 0x24 ; 00delay00
 000025 b948                          OUT PORTC, R20
-000026 d010                          RCALL DELAY
+000026 d010                          RCALL delay
 000027 e148                          LDI R20, 0x18 ; 0001 1000
 000028 b948                          OUT PORTC, R20
-000029 d00d                          RCALL DELAY
+000029 d00d                          RCALL delay
                                      
 00002a cfda                          RJMP loop ; Volver al bucle principal para verificar el valor del puerto C
                                  
@@ -1958,7 +1958,7 @@ Ejercicio1.asm(1): Including file 'C:/Program Files (x86)/Atmel/Studio/7.0/Packs
 00002b e850                          LDI R21, 0x80 ; 1000 0000  0100 0000   0010 0000   0001 0000   0000 1000   0000 0100   0000 0010   0000 0001  0000 0000
                                  derecha:
 00002c b958                          OUT PORTC, R21
-00002d d009                          RCALL DELAY
+00002d d009                          RCALL delay
 00002e 9556                          LSR R21
 00002f f7e1                          BRNE derecha
                                  
@@ -1969,19 +1969,19 @@ Ejercicio1.asm(1): Including file 'C:/Program Files (x86)/Atmel/Studio/7.0/Packs
 000033 0f55                          LSL R21
 000034 3050                          CPI R21, 0x00 ; Se debe comparar con 0x00 porque la bandera Z 
 000035 f7d9                          BRNE izquierda
-                                 
+                                     
 000036 cfce                          RJMP loop
                                  
-                                 DELAY:
-000037 e229                          LDI  R18, 41
-000038 e936                          LDI  R19, 150
-000039 e840                          LDI  R20, 128
-00003a 954a                      L1: DEC  R20
-00003b f7f1                          BRNE L1
-00003c 953a                          DEC  R19
-00003d f7e1                          BRNE L1
-00003e 952a                          DEC  R18
-00003f f7d1                          BRNE L1
+                                 delay:
+000037 e229                          ldi  r18, 41
+000038 e936                          ldi  r19, 150
+000039 e840                          ldi  r20, 128
+00003a 954a                      l1: dec  r20
+00003b f7f1                          brne L1
+00003c 953a                          dec  r19
+00003d f7e1                          brne L1
+00003e 952a                          dec  r18
+00003f f7d1                          brne L1
 000040 9508                          ret
                                  
 

@@ -1,5 +1,5 @@
 
-AVRASM ver. 2.2.8  Ejercicio1.asm Sun Mar 09 19:39:22 2025
+AVRASM ver. 2.2.8  Ejercicio1.asm Mon Mar 10 19:58:45 2025
 
 
 EQU  SIGNATURE_000 0000001e
@@ -1364,7 +1364,7 @@ CSEG loop         00000005
 CSEG parpadeo_leds 0000000e
 CSEG centro_fuera 00000015
 CSEG izquierda_derecha 0000002b
-CSEG DELAY        00000037
+CSEG delay        00000037
 CSEG derecha      0000002c
 CSEG izquierda    00000031
-CSEG L1           0000003a
+CSEG l1           0000003a

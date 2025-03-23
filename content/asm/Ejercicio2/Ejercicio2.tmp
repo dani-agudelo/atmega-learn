@@ -23,13 +23,14 @@
  </OUTPUT_FILES>
  <LABELS>
   <main><FILE>Ejercicio2.asm</FILE><LINE>6</LINE></main>
-  <loop><FILE>Ejercicio2.asm</FILE><LINE>19</LINE></loop>
-  <nivel_bajo><FILE>Ejercicio2.asm</FILE><LINE>49</LINE></nivel_bajo>
-  <bomba_apagada><FILE>Ejercicio2.asm</FILE><LINE>58</LINE></bomba_apagada>
-  <bomba_encendida><FILE>Ejercicio2.asm</FILE><LINE>53</LINE></bomba_encendida>
-  <continuar><FILE>Ejercicio2.asm</FILE><LINE>64</LINE></continuar>
-  <parpadear_led><FILE>Ejercicio2.asm</FILE><LINE>70</LINE></parpadear_led>
-  <DELAY><FILE>Ejercicio2.asm</FILE><LINE>77</LINE></DELAY>
-  <L1><FILE>Ejercicio2.asm</FILE><LINE>81</LINE></L1>
+  <loop><FILE>Ejercicio2.asm</FILE><LINE>18</LINE></loop>
+  <set_bajando><FILE>Ejercicio2.asm</FILE><LINE>44</LINE></set_bajando>
+  <set_subiendo><FILE>Ejercicio2.asm</FILE><LINE>40</LINE></set_subiendo>
+  <check_bomba_encendida><FILE>Ejercicio2.asm</FILE><LINE>48</LINE></check_bomba_encendida>
+  <bomba_apagada><FILE>Ejercicio2.asm</FILE><LINE>68</LINE></bomba_apagada>
+  <bomba_encendida><FILE>Ejercicio2.asm</FILE><LINE>64</LINE></bomba_encendida>
+  <parpadear_led><FILE>Ejercicio2.asm</FILE><LINE>77</LINE></parpadear_led>
+  <DELAY><FILE>Ejercicio2.asm</FILE><LINE>84</LINE></DELAY>
+  <l1><FILE>Ejercicio2.asm</FILE><LINE>88</LINE></l1>
  </LABELS>
 </ASSEMBLER_INFO>

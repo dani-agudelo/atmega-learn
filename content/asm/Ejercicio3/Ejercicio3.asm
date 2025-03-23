@@ -34,13 +34,6 @@ loop:
     LSR R19
     LSR R19
 
-;    ; Leer los 2 bits más significativos del puerto C 
-;     IN R19, PINC
-;     SWAP R19        ; Intercambiar los 4 bits altos y bajos
-;     LSR R19         ; 1100 -> 0110 
-;     LSR R19         ; 0110 -> 0011 
-      
-
     ; Realizar la operación
     CPI R19, 0x00
     BREQ suma

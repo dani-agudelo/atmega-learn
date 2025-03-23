@@ -27,9 +27,9 @@
   <parpadeo_leds><FILE>Ejercicio1.asm</FILE><LINE>35</LINE></parpadeo_leds>
   <centro_fuera><FILE>Ejercicio1.asm</FILE><LINE>44</LINE></centro_fuera>
   <izquierda_derecha><FILE>Ejercicio1.asm</FILE><LINE>69</LINE></izquierda_derecha>
-  <DELAY><FILE>Ejercicio1.asm</FILE><LINE>87</LINE></DELAY>
+  <delay><FILE>Ejercicio1.asm</FILE><LINE>87</LINE></delay>
   <derecha><FILE>Ejercicio1.asm</FILE><LINE>71</LINE></derecha>
   <izquierda><FILE>Ejercicio1.asm</FILE><LINE>78</LINE></izquierda>
-  <L1><FILE>Ejercicio1.asm</FILE><LINE>91</LINE></L1>
+  <l1><FILE>Ejercicio1.asm</FILE><LINE>91</LINE></l1>
  </LABELS>
 </ASSEMBLER_INFO>
