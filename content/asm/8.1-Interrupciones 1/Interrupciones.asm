@@ -7,25 +7,25 @@ RJMP start
 RJMP ISR_0 ; INT0 está en 0002, ISR Interrupt Service Routine
 
 .org 0x0004
-RJMP ISR_1
+RJMP ISR_1 ; INT1 está en 0004
 
 .org 0x0006
-RJMP ISR_2
+RJMP ISR_2 ; INT2 está en 0006
 
 
 start:
 	ldi r16, 0x00
-	out DDRD, r16
+	out DDRD, r16	; Configura el puerto D como entrada
 	ldi r16, high(RAMEND) ; apuntador al stack
-	out SPH, r16
+	out SPH, r16		  ; SPH es el registro que apunta al stack, parte alta
 	ldi r16, low(RAMEND)
-	out SPL, r16
-	ldi r16, 0x01
-	out EIMSK, r16 ; le da 'energia' al interruptor INT0 ya que es 01
+	out SPL, r16          ; SPL es el registro que apunta al stack, parte baja
+	ldi r16, 0x01         
+	out EIMSK, r16  ; le da 'energia' al interruptor INT0 ya que es 01
 	ldi r16, 0x03
-	sts EICRA, r16  ; Se detecta de low a high, rising
-    ldi r18, 0x00
-	sei
+	sts EICRA, r16  ; Se detecta de low a high, rising. Ya que es 11
+    ldi r18, 0x00   ; Se inicializa en 0 el contador
+	sei             ; activa las interrupciones globales
 
 ciclo:
 
@@ -33,7 +33,7 @@ ciclo:
 
 ISR_0:
     inc r18
-    reti    ; reti es 
+    reti    ; reti es un return de la interrupción, es decir, que regresa a la instrucción que se estaba ejecutando 
 
 ISR_1:
     nop
@@ -53,9 +53,12 @@ ISR_2:
 
 
 ; Las interrupciones Externas necesitan 4 registros:
-;EIFR External interruption Flag Register, IN /OUT  cada bit nos dice int flag, si es 1 hay una interrupción,  la marca
-;EIMSK External interrupt mask register, enable, le da 'energia' al tiembre IN /OUT
-;EICRA  Activa la forma en la que se va a detectar, LDS, STS, de low a high rising, al contrario 
-;EICRB
+;EIFR External Interrupt Flag Register, IN /OUT. Indica si hubo una interrupción externa, cada bit es una interrupción (INT0, INT1, INT2)
+;EIMSK External Interrupt Mask Register, enable, le da 'energia' al tiembre IN /OUT. Habilita las interrupciones externas
+;EICRA  Activa la forma en la que se va a detectar las interrupciones, de low a high rising, falling, etc. LDS, STS
+;EICRB Si se usan las interrupciones 4 a 7, LDS, STS
 
 
+; El stack es una estructura de datos que se usa para guardar la dirección de retorno de las subrutinas. 
+; RAMEND es la dirección de la última dirección de la memoria RAM, que es 0x10FF.
+; Se carga en los registros SPH y SPL para que el stack apunte a la dirección de la última dirección de la memoria RAM.

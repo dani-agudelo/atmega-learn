@@ -2,7 +2,7 @@
 
 .org 0x000
 rjmp    start
-.org 0x002E
+.org 0x002E              ; define la dirección de la interrupción del timer 0
 rjmp   ISR_TMR0
 
 start: 
@@ -14,7 +14,7 @@ start:
     out TCCR0A, r20 ; Modo normal, se le envía 0x00
     ldi r21, 0x01  
     out TCCR0B, r21 ; Preescalador de 1
-    sts TIMSK0, r21 ; Habilita la interrupción
+    sts TIMSK0, r21 ; Habilita la interrupción por desborde
     sei             ; activa las interrupciones
 
 ciclo:
@@ -23,25 +23,6 @@ ciclo:
 
 ISR_TMR0:
     reti
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -55,7 +36,6 @@ ISR_TMR0:
 
 
 ; El desborde puede generar una bandera
-; PWM es 
 
 ; Necesitamos manejar el 
 ;TCCR0A, contador normal

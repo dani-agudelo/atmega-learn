@@ -13,7 +13,7 @@ main:
     OUT DDRB, R16
 
 loop:
-    ; Leer la entrada del puerto B para definir qué leer
+    ; Leer la entrada del puerto B para definir qué leer, si el nombre o el teléfono
     IN R16, PINB
     CPI R16, 0x01  ; Si la entrada es 1, leer el nombre
     BREQ leer_nombre
@@ -24,28 +24,28 @@ loop:
 leer_nombre:
     LDI ZH, HIGH(Nombre<<1) ; Cargar la dirección de la tabla de segmentos en Z
     LDI ZL, LOW(Nombre<<1)
-    RJMP mostrar
+    RJMP mostrar_nombre
 
 leer_telefono:
     LDI ZH, HIGH(Telefono<<1) ; Cargar la dirección de la tabla de segmentos en Z
     LDI ZL, LOW(Telefono<<1)
-    RJMP mostrar
+    RJMP mostrar_telefono
 
-mostrar:
+mostrar_nombre:
     LPM R17, Z
     CPI R17, 0x00  ; Verificar si es el carácter de terminación
     BREQ loop
     OUT PORTD, R17
     INC ZL
-    RJMP mostrar
+    RJMP mostrar_nombre
 
-mostrar:
+mostrar_telefono:
     LPM R17, Z
     CPI R17, 'F'  ; Verificar si es el carácter de terminación
     BREQ loop
     OUT PORTD, R17
     INC ZL
-    RJMP mostrar
+    RJMP mostrar_telefono
 
 .org 0x100
 Nombre:
