@@ -1,0 +1,58 @@
+; Tabla de equivalencias (con ánodo común, activo en 0)
+.cseg
+.ORG 0x100
+TABLE:
+    .DB 0b11100001, 0b11111111   ; Letra J
+    .DB 0b11001001, 0b11101110   ; Letra H
+    .DB 0b11000000, 0b11111111   ; Letra O
+    .DB 0b11001001, 0b11011101   ; Letra N
+
+.ORG 0x00
+START:
+    LDI R16, 0xFF
+    OUT DDRA, R16    ; Configura el puerto A como salida (para display)
+    LDI R16, 0x3F
+    OUT DDRC, R16    ; Configura el puerto C como salida (para display)
+
+    LDI R17, 0       ; Inicializa contador en 0
+
+LOOP:
+    LDI ZH, HIGH(TABLE << 1)  ; Carga la dirección de la tabla en Z
+    LDI ZL, LOW(TABLE << 1)
+
+    ADD ZL, R17      ; Desplazamiento en la tabla
+    LPM R18, Z       ; Leer el valor desde la memoria de programa
+    INC ZL          ; Incrementar ZL
+
+    LPM R19, Z       ; Leer el segundo byte
+    INC ZL          ; Incrementar ZL
+
+    OUT PORTA, R18   ; Mostrar en el display
+    ORI R19, 0b11000000  ; Enmascarar bits sobrantes
+    OUT PORTC, R19   ; Mostrar en el display
+
+	INC R17
+	INC R17
+
+    CALL DELAY       ; Esperar 1 segundo
+
+    CPI R17, 8       ; Comparar con el tamaño total de la tabla (4 letras * 2 bytes)
+    BRLO LOOP        ; Si aún no se recorrió toda la tabla, continuar
+	
+	LDI R17, 0
+    RJMP LOOP       ; Reiniciar el contador
+
+DELAY:
+    LDI R29, 81
+DELAY_LOOP1:
+    LDI R30, 255
+DELAY_LOOP2:
+    LDI R31, 255
+DELAY_LOOP3: 
+    DEC R31         
+    BRNE DELAY_LOOP3  
+    DEC R30         
+    BRNE DELAY_LOOP2  
+    DEC R29         
+    BRNE DELAY_LOOP1  
+    RET

@@ -8,7 +8,7 @@ main:
     ser R17
     OUT DDRD, R17
 
-    ; Configurar el puerto B como entrada (0)
+    ; Configurar el puerto B como entrada (0), para saber qué leer
     LDI R16, 0x00
     OUT DDRB, R16
 
@@ -47,7 +47,7 @@ mostrar_telefono:
     INC ZL
     RJMP mostrar_telefono
 
-.org 0x100
+.org 0x0100
 Nombre:
     .db 'D', 'A', 'N', 'I', 'E', 'L', 'A', 0
 Telefono:

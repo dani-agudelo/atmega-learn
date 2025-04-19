@@ -6,22 +6,32 @@ rjmp    start
 rjmp   ISR_TMR0
 
 start: 
-	ldi r16, high(RAMEND) ; apuntador al stack
+    ; inicializador del stack
+	ldi r16, high(RAMEND) 
 	out SPH, r16
 	ldi r16, low(RAMEND)
     out SPL, r16
+
+    ; configuración del modo de operación del timer
     ldi r20, 0x00
-    out TCCR0A, r20 ; Modo normal, se le envía 0x00
+    out TCCR0A, r20 ; modo normal (de 0 a 255 y se desborda), se le envía 0x00
+
+    ; configuración del preescalador
     ldi r21, 0x01  
-    out TCCR0B, r21 ; Preescalador de 1
-    sts TIMSK0, r21 ; Habilita la interrupción por desborde
-    sei             ; activa las interrupciones
+    out TCCR0B, r21 ; Preescalador de 1 (se cuenta cada ciclo de reloj)
+
+    ; habilitar la interrupción por desbordamiento
+    sts TIMSK0, r21 ; 0x01 activa la interrupción por overflow del timer 0
+
+    ; habilitar la interrupción global
+    sei            
 
 ciclo:
+    ; ciclo infinito esperando la interrupción por desbordamiento
     rjmp ciclo
 
-
 ISR_TMR0:
+    ; se registra el estado del procesador
     reti
 
 
@@ -41,7 +51,7 @@ ISR_TMR0:
 ;TCCR0A, contador normal
 ;TCCR0B, Modo preescalador, de 1 en 1, 2 en 2...
 ;TIMSK0, Evento que activa
-;OCR0A
+;OCR0A ; Este es el valor de comparación que se va a comparar con el contador
 ; TIFR0, bandera de desborde
 ; TCNT0, contador
 ; ´pag 128

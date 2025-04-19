@@ -16,20 +16,25 @@ RJMP ISR_2 ; INT2 está en 0006
 start:
 	ldi r16, 0x00
 	out DDRD, r16	; Configura el puerto D como entrada
-	ldi r16, high(RAMEND) ; apuntador al stack
+
+	ldi r16, high(RAMEND) ; Se configura el puntero al stack en la última dirección de la RAM
 	out SPH, r16		  ; SPH es el registro que apunta al stack, parte alta
+
 	ldi r16, low(RAMEND)
 	out SPL, r16          ; SPL es el registro que apunta al stack, parte baja
+
 	ldi r16, 0x01         
-	out EIMSK, r16  ; le da 'energia' al interruptor INT0 ya que es 01
+	out EIMSK, r16  ; le da 'energia' solo al interruptor INT0 ya que es 01
+
+
 	ldi r16, 0x03
-	sts EICRA, r16  ; Se detecta de low a high, rising. Ya que es 11
+	sts EICRA, r16  ; flanco ascendente, de low a high, rising. Ya que es 11
     ldi r18, 0x00   ; Se inicializa en 0 el contador
 	sei             ; activa las interrupciones globales
 
 ciclo:
 
-	rjmp ciclo
+	rjmp ciclo   ; Se queda en un ciclo infinito, esperando a que ocurra una interrupción
 
 ISR_0:
     inc r18
@@ -60,5 +65,8 @@ ISR_2:
 
 
 ; El stack es una estructura de datos que se usa para guardar la dirección de retorno de las subrutinas. 
-; RAMEND es la dirección de la última dirección de la memoria RAM, que es 0x10FF.
+; RAMEND es la dirección de la última dirección de la memoria RAM, que es 0x21FF.
 ; Se carga en los registros SPH y SPL para que el stack apunte a la dirección de la última dirección de la memoria RAM.
+
+
+; En AVR, los vectores de interrupción son direcciones fijas donde el micro salta cuando ocurre una interrupción.

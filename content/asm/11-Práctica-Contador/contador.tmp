@@ -1,0 +1,33 @@
+<ASSEMBLER_INFO>
+ <VERSION>2.2.8</VERSION>
+ <DEVICE>"ATmega2560"</DEVICE>
+ <WORKING_DIR>C:\Users\USUARIO\Documents\Universidad\Septimo Semestre\Micros\2560-2025\content\asm\11-Práctica-Contador</WORKING_DIR>
+ <INCLUDE_PATH>
+  <DIR>C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.7.374/avrasm/inc</DIR>
+  <DIR>C:/Program Files (x86)/Atmel/Studio/7.0/toolchain/avr8/avrassembler/Include</DIR>
+  <DIR></DIR>
+ </INCLUDE_PATH>
+ <SOURCE_FILE>contador.asm</SOURCE_FILE>
+ <INCLUDED_FILES>
+  <FILE>C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.7.374/avrasm/inc\m2560def.inc</FILE>
+ </INCLUDED_FILES>
+ <OBJECT_FILES>
+  <FILE>contador.obj</FILE>
+ </OBJECT_FILES>
+ <HEX_FILES>
+  <FILE>contador.hex</FILE>
+ </HEX_FILES>
+ <OUTPUT_FILES>
+  <FILE>contador.map</FILE>
+  <FILE>contador.lss</FILE>
+ </OUTPUT_FILES>
+ <LABELS>
+  <start><FILE>contador.asm</FILE><LINE>12</LINE></start>
+  <ISR_TMR0><FILE>contador.asm</FILE><LINE>73</LINE></ISR_TMR0>
+  <actualizar_display><FILE>contador.asm</FILE><LINE>48</LINE></actualizar_display>
+  <main_loop><FILE>contador.asm</FILE><LINE>42</LINE></main_loop>
+  <Display><FILE>contador.asm</FILE><LINE>98</LINE></Display>
+  <fin_ISR><FILE>contador.asm</FILE><LINE>89</LINE></fin_ISR>
+  <continuar><FILE>contador.asm</FILE><LINE>86</LINE></continuar>
+ </LABELS>
+</ASSEMBLER_INFO>

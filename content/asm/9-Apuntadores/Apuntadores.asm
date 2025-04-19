@@ -8,6 +8,7 @@ main:
     OUT DDRD, R17   ; Configura el puerto D como salida
     LDI ZH, HIGH(Display<<1) ; Cargar la *dirección* de la tabla Display en Z, 
     LDI ZL, LOW(Display<<1)
+    ; Z = dirección de inicio de la tabla Display en programa flash (0x200)
 
 loop:
     call mostrar    ; Llama a la subrutina mostrar
@@ -26,5 +27,8 @@ Display:
 
 ; En la primera iteración, Z apunta a la dirección 0x200, porque se multiplicó por 2 por ser de 16, donde se encuentra el valor 0
 ; En la segunda iteración, Z apunta a la dirección 0x201, donde se encuentra el valor 1
+
+
+; Display está en la memoria de programa (.db), por lo que se debe usar LPM para leerlo
 
         

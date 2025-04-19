@@ -9,13 +9,17 @@ rjmp ISR_2
 
 start:
     ldi r16, 0x00
-	out DDRD, r16
+	out DDRD, r16 	; Configura el puerto D como entrada
+
 	ldi r16,high(RAMEND)   ;apuntador a stack
 	out SPH,r16
-	ldi r16,low(RAMEND)
+
+	ldi r16,low(RAMEND)  ;apuntador a stack
 	out SPL,r16
+
 	ldi r16, 0x03
 	out EIMSK, r16         ; habilita la interrupción externa INT0 y INT1 (11)
+	
 	ldi r16, 0x0F          
 	sts EICRA, r16         ; INT0 y INT1 se activan de low a high, rising 11 11
 	ldi r18, 0x00          ; se inicializa en 0 el contador
