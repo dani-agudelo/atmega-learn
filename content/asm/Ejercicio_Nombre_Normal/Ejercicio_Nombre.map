@@ -1,5 +1,5 @@
 
-AVRASM ver. 2.2.8  contador.asm Sat Apr 19 18:44:05 2025
+AVRASM ver. 2.2.8  Ejercicio_Nombre.asm Sat Apr 19 19:11:36 2025
 
 
 EQU  SIGNATURE_000 0000001e
@@ -1361,13 +1361,13 @@ EQU  UTXC3addr    00000070
 EQU  INT_VECTORS_SIZE 00000072
 DEF  delay_counter r19
 DEF  display_counter r18
-DEF  switch_state r17
+DEF  tempL        r20
+DEF  tempH        r21
+DEF  temp         r22
 CSEG start        0000002f
-CSEG ISR_TMR0     00000051
+CSEG ISR_TMR0     0000005a
 CSEG actualizar_display 00000043
 CSEG main_loop    00000042
-CSEG Display      00000064
-CSEG fin_ISR      00000062
-CSEG inc_counter  0000005d
-CSEG no_wrap_dec  0000005c
-CSEG actualizar   00000061
+CSEG table        00000066
+CSEG fin_ISR      00000064
+CSEG actualizar   00000063

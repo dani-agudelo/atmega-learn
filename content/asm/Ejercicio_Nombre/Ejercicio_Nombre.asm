@@ -94,7 +94,7 @@ reti_isr_t0:
 table:
     ; Letras en formato de 14 segmentos
     ; D: 0x 0000 1000 1000 1111   
-    ; D: 0x 0001 0010 0000 1111   abcdil
+    ;       abcd efg1g2 hijk lm
     ; A: 0x10 0010 0011 0111    
     ; N: 0x0000010001110110
     ; I: 0x0000100010001001

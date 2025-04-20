@@ -1,0 +1,33 @@
+<ASSEMBLER_INFO>
+ <VERSION>2.2.8</VERSION>
+ <DEVICE>"ATmega2560"</DEVICE>
+ <WORKING_DIR>C:\Users\USUARIO\Documents\Universidad\Septimo Semestre\Micros\2560-2025\content\asm\Ejercicio_Nombre_Normal</WORKING_DIR>
+ <INCLUDE_PATH>
+  <DIR>C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.7.374/avrasm/inc</DIR>
+  <DIR>C:/Program Files (x86)/Atmel/Studio/7.0/toolchain/avr8/avrassembler/Include</DIR>
+  <DIR></DIR>
+ </INCLUDE_PATH>
+ <SOURCE_FILE>Ejercicio_Nombre.asm</SOURCE_FILE>
+ <INCLUDED_FILES>
+  <FILE>C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.7.374/avrasm/inc\m2560def.inc</FILE>
+ </INCLUDED_FILES>
+ <OBJECT_FILES>
+  <FILE>Ejercicio_Nombre.obj</FILE>
+ </OBJECT_FILES>
+ <HEX_FILES>
+  <FILE>Ejercicio_Nombre.hex</FILE>
+ </HEX_FILES>
+ <OUTPUT_FILES>
+  <FILE>Ejercicio_Nombre.map</FILE>
+  <FILE>Ejercicio_Nombre.lss</FILE>
+ </OUTPUT_FILES>
+ <LABELS>
+  <start><FILE>Ejercicio_Nombre.asm</FILE><LINE>15</LINE></start>
+  <ISR_TMR0><FILE>Ejercicio_Nombre.asm</FILE><LINE>85</LINE></ISR_TMR0>
+  <actualizar_display><FILE>Ejercicio_Nombre.asm</FILE><LINE>47</LINE></actualizar_display>
+  <main_loop><FILE>Ejercicio_Nombre.asm</FILE><LINE>43</LINE></main_loop>
+  <table><FILE>Ejercicio_Nombre.asm</FILE><LINE>105</LINE></table>
+  <fin_ISR><FILE>Ejercicio_Nombre.asm</FILE><LINE>100</LINE></fin_ISR>
+  <actualizar><FILE>Ejercicio_Nombre.asm</FILE><LINE>97</LINE></actualizar>
+ </LABELS>
+</ASSEMBLER_INFO>

@@ -1,10 +1,10 @@
 
-AVRASM ver. 2.2.8  contador.asm Sat Apr 19 18:44:05 2025
+AVRASM ver. 2.2.8  Ejercicio_Nombre.asm Sat Apr 19 19:11:36 2025
 
 [builtin](2): Including file 'C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.7.374/avrasm/inc\m2560def.inc'
-contador.asm(1): Including file 'C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.7.374/avrasm/inc\m2560def.inc'
+Ejercicio_Nombre.asm(1): Including file 'C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.7.374/avrasm/inc\m2560def.inc'
 [builtin](2): Including file 'C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.7.374/avrasm/inc\m2560def.inc'
-contador.asm(1): Including file 'C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.7.374/avrasm/inc\m2560def.inc'
+Ejercicio_Nombre.asm(1): Including file 'C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.7.374/avrasm/inc\m2560def.inc'
                                  
                                  .include "m2560def.inc"
                                  
@@ -1888,15 +1888,17 @@ contador.asm(1): Including file 'C:/Program Files (x86)/Atmel/Studio/7.0/Packs/a
                                  
                                  ; ***** END OF FILE ******************************************************
                                  
-                                 .def delay_counter = r19     ; Cuenta los overflows (~0.5s)
-                                 .def display_counter = r18   ; Valor mostrado en el display
-                                 .def switch_state = r17      ; Guarda el estado del botón
+                                 .def delay_counter = r19      ; Cuenta los overflows (~0.5s)
+                                 .def display_counter = r18    ; Índice de la letra a mostrar
+                                 .def tempL = r20              ; Parte baja de la palabra leída
+                                 .def tempH = r21              ; Parte alta de la palabra leída
+                                 .def temp = r22               ; Registro temporal para índice
                                  
                                  .org 0x0000
 000000 c02e                      rjmp start
                                  
-                                 .org 0x002E                  ; Vector de interrupción Timer0
-00002e c022                      rjmp ISR_TMR0
+                                 .org 0x002E                   ; Vector de interrupción Timer0
+00002e c02b                      rjmp ISR_TMR0
                                  
                                  start:
                                      ; Configurar stack
@@ -1905,90 +1907,98 @@ contador.asm(1): Including file 'C:/Program Files (x86)/Atmel/Studio/7.0/Packs/a
 000031 ef0f                          ldi r16, low(RAMEND)
 000032 bf0d                          out SPL, r16
                                  
-000033 2411                          clr r1                   ; r1 siempre debe ser cero
+000033 2411                          clr r1                    ; r1 siempre en cero
                                  
-                                     ; Puerto A como salida (display), B como entrada (botón)
+                                     ; Puerto A y C como salida (para los 16 bits del display)
 000034 ef0f                          ldi r16, 0xFF
 000035 b901                          out DDRA, r16
-000036 2700                          clr r16
-000037 b904                          out DDRB, r16
+000036 b907                          out DDRC, r16
                                  
-                                     ; Timer0 modo normal, preescalador 1024, interrupción ON
+                                     ; Timer0 en modo normal, preescalador 1024
+000037 2700                          clr r16
 000038 bd04                          out TCCR0A, r16
 000039 e005                          ldi r16, 0x05
 00003a bd05                          out TCCR0B, r16
 00003b e001                          ldi r16, 0x01
-00003c 9300 006e                     sts TIMSK0, r16
+00003c 9300 006e                     sts TIMSK0, r16           ; Habilita interrupción de overflow
                                  
-00003e 2722                          clr display_counter      ; Mostrar 0
-00003f 2733                          clr delay_counter
+00003e 2733                          clr delay_counter
+00003f 2722                          clr display_counter
 000040 d002                          rcall actualizar_display
                                  
-000041 9478                          sei                      ; Habilitar interrupciones
+000041 9478                          sei                       ; Habilita interrupciones
                                  
                                  main_loop:
-000042 cfff                          rjmp main_loop           ; Espera activa
+000042 cfff                          rjmp main_loop            ; Espera activa
                                  
-                                 ; --- Muestra el valor del contador en el display ---
+                                 ; --- Mostrar letra según índice ---
                                  actualizar_display:
 000043 920f                          push r0
-000044 93ef                          push ZL
-000045 93ff                          push ZH
+000044 921f                          push r1
+000045 93ef                          push ZL
+000046 93ff                          push ZH
+000047 936f                          push temp
                                  
-000046 e0f0                          ldi ZH, high(Display << 1)
-000047 ece8                          ldi ZL, low(Display << 1)
-000048 0fe2                          add ZL, display_counter
-000049 1df1                          adc ZH, r1
-00004a 9104                          lpm r16, Z
-00004b 9500                          com r16                  ; Inversión para display cátodo común
-00004c b902                          out PORTA, r16
+                                     ; Copiar display_counter a temp para no modificarlo
+000048 2f62                          mov temp, display_counter
+000049 0f66                          lsl temp                  ; temp = display_counter * 2
                                  
-00004d 91ff                          pop ZH
-00004e 91ef                          pop ZL
-00004f 900f                          pop r0
-000050 9508                          ret
+                                     ; Dirección a la tabla table
+00004a e0f0                          ldi ZH, high(table << 1)
+00004b ecec                          ldi ZL, low(table << 1)
+00004c 0fe6                          add ZL, temp
+00004d 1df1                          adc ZH, r1
                                  
-                                 ; --- Interrupción por overflow (~16ms c/u) ---
+                                     ; Leer parte baja y alta de la palabra
+00004e 9145                          lpm tempL, Z+
+00004f 9154                          lpm tempH, Z
+                                 
+                                     ; Invertimos si es cátodo común
+000050 9540                          com tempL
+000051 9550                          com tempH
+                                 
+                                     ; Mostrar en puertos
+000052 b942                          out PORTA, tempL
+000053 b958                          out PORTC, tempH
+                                 
+                                     ; Restaurar registros
+000054 916f                          pop temp
+000055 91ff                          pop ZH
+000056 91ef                          pop ZL
+000057 901f                          pop r1
+000058 900f                          pop r0
+000059 9508                          ret
+                                 
+                                 ; --- Interrupción de Timer0 (~0.5s por letra) ---
                                  ISR_TMR0:
-000051 930f                          push r16
-000052 9533                          inc delay_counter
-000053 313e                          cpi delay_counter, 30    ; ~0.5s
-000054 f469                          brne fin_ISR
+00005a 930f                          push r16
+00005b 9533                          inc delay_counter
+00005c 313e                          cpi delay_counter, 30
+00005d f431                          brne fin_ISR
                                  
-000055 2733                          clr delay_counter
-000056 b113                          in switch_state, PINB
-000057 fd10                          sbrc switch_state, 0     ; Si PB0 está en 1 → contar ascendente
-000058 c004                          rjmp inc_counter
-                                 
-000059 952a                          dec display_counter
-00005a f40a                          brpl no_wrap_dec
-00005b e02f                          ldi display_counter, 0x0F
-                                 no_wrap_dec:
-00005c c004                          rjmp actualizar
-                                 
-                                 inc_counter:
-00005d 9523                          inc display_counter
-00005e 3120                          cpi display_counter, 0x10
-00005f f008                          brlo actualizar
-000060 2722                          clr display_counter
+00005e 2733                          clr delay_counter
+00005f 9523                          inc display_counter
+000060 3027                          cpi display_counter, 7     ; 7 letras en "DANIELA"
+000061 f008                          brlo actualizar
+000062 2722                          clr display_counter        ; Vuelve a mostrar desde la D
                                  
                                  actualizar:
-000061 dfe1                          rcall actualizar_display
+000063 dfdf                          rcall actualizar_display
                                  
                                  fin_ISR:
-000062 910f                          pop r16
-000063 9518                          reti
+000064 910f                          pop r16
+000065 9518                          reti
                                  
-                                 ; --- Tabla para display 7 segmentos ---
-                                 Display:
-000064 063f
-000065 4f5b                          .db 0b00111111, 0b00000110, 0b01011011, 0b01001111
-000066 6d66
-000067 077d                          .db 0b01100110, 0b01101101, 0b01111101, 0b00000111
-000068 6f7f
-000069 7c77                          .db 0b01111111, 0b01101111, 0b01110111, 0b01111100
-00006a 5e39
-00006b 7179                          .db 0b00111001, 0b01011110, 0b01111001, 0b01110001
+                                 ; --- Tabla de letras en 14 segmentos (formato de 16 bits)
+                                 table:
+000066 088f
+000067 2237
+000068 0476
+000069 0889
+00006a 2239
+00006b 0038
+00006c 2237                          .dw 0x088F, 0x2237, 0x0476, 0x0889, 0x2239, 0x0038, 0x2237
+                                 
 
 
 RESOURCE USE INFORMATION
@@ -2006,40 +2016,40 @@ counted separately from r26..r31 here.
 .dseg memory usage only counts static data declared with .byte
 
 "ATmega2560" register use summary:
-x  :   0 y  :   0 z  :   1 r0 :   2 r1 :   2 r2 :   0 r3 :   0 r4 :   0 
+x  :   0 y  :   0 z  :   2 r0 :   2 r1 :   4 r2 :   0 r3 :   0 r4 :   0 
 r5 :   0 r6 :   0 r7 :   0 r8 :   0 r9 :   0 r10:   0 r11:   0 r12:   0 
-r13:   0 r14:   0 r15:   0 r16:  18 r17:   2 r18:   7 r19:   4 r20:   0 
-r21:   0 r22:   0 r23:   0 r24:   0 r25:   0 r26:   0 r27:   0 r28:   0 
+r13:   0 r14:   0 r15:   0 r16:  15 r17:   0 r18:   5 r19:   4 r20:   3 
+r21:   3 r22:   5 r23:   0 r24:   0 r25:   0 r26:   0 r27:   0 r28:   0 
 r29:   0 r30:   4 r31:   4 
-Registers used: 9 out of 35 (25.7%)
+Registers used: 11 out of 35 (31.4%)
 
 "ATmega2560" instruction use summary:
 .lds  :   0 .sts  :   0 adc   :   1 add   :   1 adiw  :   0 and   :   0 
 andi  :   0 asr   :   0 bclr  :   0 bld   :   0 brbc  :   0 brbs  :   0 
 brcc  :   0 brcs  :   0 break :   0 breq  :   0 brge  :   0 brhc  :   0 
 brhs  :   0 brid  :   0 brie  :   0 brlo  :   1 brlt  :   0 brmi  :   0 
-brne  :   1 brpl  :   1 brsh  :   0 brtc  :   0 brts  :   0 brvc  :   0 
+brne  :   1 brpl  :   0 brsh  :   0 brtc  :   0 brts  :   0 brvc  :   0 
 brvs  :   0 bset  :   0 bst   :   0 call  :   0 cbi   :   0 cbr   :   0 
 clc   :   0 clh   :   0 cli   :   0 cln   :   0 clr   :   6 cls   :   0 
-clt   :   0 clv   :   0 clz   :   0 com   :   1 cp    :   0 cpc   :   0 
-cpi   :   2 cpse  :   0 dec   :   1 eicall:   0 eijmp :   0 elpm  :   0 
+clt   :   0 clv   :   0 clz   :   0 com   :   2 cp    :   0 cpc   :   0 
+cpi   :   2 cpse  :   0 dec   :   0 eicall:   0 eijmp :   0 elpm  :   0 
 eor   :   0 fmul  :   0 fmuls :   0 fmulsu:   0 icall :   0 ijmp  :   0 
-in    :   1 inc   :   2 jmp   :   0 ld    :   0 ldd   :   0 ldi   :   8 
-lds   :   0 lpm   :   2 lsl   :   0 lsr   :   0 mov   :   0 movw  :   0 
+in    :   0 inc   :   2 jmp   :   0 ld    :   0 ldd   :   0 ldi   :   7 
+lds   :   0 lpm   :   3 lsl   :   1 lsr   :   0 mov   :   1 movw  :   0 
 mul   :   0 muls  :   0 mulsu :   0 neg   :   0 nop   :   0 or    :   0 
-ori   :   0 out   :   7 pop   :   4 push  :   4 rcall :   2 ret   :   1 
-reti  :   1 rjmp  :   5 rol   :   0 ror   :   0 sbc   :   0 sbci  :   0 
-sbi   :   0 sbic  :   0 sbis  :   0 sbiw  :   0 sbr   :   0 sbrc  :   1 
+ori   :   0 out   :   8 pop   :   6 push  :   6 rcall :   2 ret   :   1 
+reti  :   1 rjmp  :   3 rol   :   0 ror   :   0 sbc   :   0 sbci  :   0 
+sbi   :   0 sbic  :   0 sbis  :   0 sbiw  :   0 sbr   :   0 sbrc  :   0 
 sbrs  :   0 sec   :   0 seh   :   0 sei   :   1 sen   :   0 ser   :   0 
 ses   :   0 set   :   0 sev   :   0 sez   :   0 sleep :   0 spm   :   0 
 st    :   0 std   :   0 sts   :   1 sub   :   0 subi  :   0 swap  :   0 
 tst   :   0 wdr   :   0 
-Instructions used: 23 out of 116 (19.8%)
+Instructions used: 21 out of 116 (18.1%)
 
 "ATmega2560" memory use summary [bytes]:
 Segment   Begin    End      Code   Data   Used    Size   Use%
 ---------------------------------------------------------------
-[.cseg] 0x000000 0x0000d8    110     16    126  262144   0.0%
+[.cseg] 0x000000 0x0000da    114     14    128  262144   0.0%
 [.dseg] 0x000200 0x000200      0      0      0    8192   0.0%
 [.eseg] 0x000000 0x000000      0      0      0    4096   0.0%
 

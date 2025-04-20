@@ -22,12 +22,14 @@
   <FILE>contador.lss</FILE>
  </OUTPUT_FILES>
  <LABELS>
-  <start><FILE>contador.asm</FILE><LINE>12</LINE></start>
-  <ISR_TMR0><FILE>contador.asm</FILE><LINE>73</LINE></ISR_TMR0>
-  <actualizar_display><FILE>contador.asm</FILE><LINE>48</LINE></actualizar_display>
-  <main_loop><FILE>contador.asm</FILE><LINE>42</LINE></main_loop>
-  <Display><FILE>contador.asm</FILE><LINE>98</LINE></Display>
-  <fin_ISR><FILE>contador.asm</FILE><LINE>89</LINE></fin_ISR>
-  <continuar><FILE>contador.asm</FILE><LINE>86</LINE></continuar>
+  <start><FILE>contador.asm</FILE><LINE>13</LINE></start>
+  <ISR_TMR0><FILE>contador.asm</FILE><LINE>64</LINE></ISR_TMR0>
+  <actualizar_display><FILE>contador.asm</FILE><LINE>45</LINE></actualizar_display>
+  <main_loop><FILE>contador.asm</FILE><LINE>41</LINE></main_loop>
+  <Display><FILE>contador.asm</FILE><LINE>95</LINE></Display>
+  <fin_ISR><FILE>contador.asm</FILE><LINE>90</LINE></fin_ISR>
+  <inc_counter><FILE>contador.asm</FILE><LINE>81</LINE></inc_counter>
+  <no_wrap_dec><FILE>contador.asm</FILE><LINE>78</LINE></no_wrap_dec>
+  <actualizar><FILE>contador.asm</FILE><LINE>87</LINE></actualizar>
  </LABELS>
 </ASSEMBLER_INFO>
