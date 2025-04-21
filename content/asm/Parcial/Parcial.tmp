@@ -1,0 +1,42 @@
+<ASSEMBLER_INFO>
+ <VERSION>2.2.8</VERSION>
+ <DEVICE>"ATmega2560"</DEVICE>
+ <WORKING_DIR>C:\Users\USUARIO\Documents\Universidad\Septimo Semestre\Micros\2560-2025\content\asm\Parcial</WORKING_DIR>
+ <INCLUDE_PATH>
+  <DIR>C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.7.374/avrasm/inc</DIR>
+  <DIR>C:/Program Files (x86)/Atmel/Studio/7.0/toolchain/avr8/avrassembler/Include</DIR>
+  <DIR></DIR>
+ </INCLUDE_PATH>
+ <SOURCE_FILE>Parcial.asm</SOURCE_FILE>
+ <INCLUDED_FILES>
+  <FILE>C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.7.374/avrasm/inc\m2560def.inc</FILE>
+ </INCLUDED_FILES>
+ <OBJECT_FILES>
+  <FILE>Parcial.obj</FILE>
+ </OBJECT_FILES>
+ <HEX_FILES>
+  <FILE>Parcial.hex</FILE>
+ </HEX_FILES>
+ <OUTPUT_FILES>
+  <FILE>Parcial.map</FILE>
+  <FILE>Parcial.lss</FILE>
+ </OUTPUT_FILES>
+ <LABELS>
+  <inicio><FILE>Parcial.asm</FILE><LINE>26</LINE></inicio>
+  <ISR_BOTON><FILE>Parcial.asm</FILE><LINE>72</LINE></ISR_BOTON>
+  <ISR_BOTON_MOSTRAR><FILE>Parcial.asm</FILE><LINE>95</LINE></ISR_BOTON_MOSTRAR>
+  <ISR_TMR0><FILE>Parcial.asm</FILE><LINE>193</LINE></ISR_TMR0>
+  <bucle_principal><FILE>Parcial.asm</FILE><LINE>67</LINE></bucle_principal>
+  <actualizar_display><FILE>Parcial.asm</FILE><LINE>159</LINE></actualizar_display>
+  <fin_isr_boton><FILE>Parcial.asm</FILE><LINE>88</LINE></fin_isr_boton>
+  <guardar_valor><FILE>Parcial.asm</FILE><LINE>125</LINE></guardar_valor>
+  <fin_isr_boton_mostrar><FILE>Parcial.asm</FILE><LINE>118</LINE></fin_isr_boton_mostrar>
+  <leer_eeprom><FILE>Parcial.asm</FILE><LINE>147</LINE></leer_eeprom>
+  <guardar_fin><FILE>Parcial.asm</FILE><LINE>143</LINE></guardar_fin>
+  <Tabla_Display><FILE>Parcial.asm</FILE><LINE>253</LINE></Tabla_Display>
+  <sin_antirebote><FILE>Parcial.asm</FILE><LINE>203</LINE></sin_antirebote>
+  <check_eeprom_mode><FILE>Parcial.asm</FILE><LINE>219</LINE></check_eeprom_mode>
+  <fin_tmr0><FILE>Parcial.asm</FILE><LINE>245</LINE></fin_tmr0>
+  <leer_siguiente><FILE>Parcial.asm</FILE><LINE>242</LINE></leer_siguiente>
+ </LABELS>
+</ASSEMBLER_INFO>
