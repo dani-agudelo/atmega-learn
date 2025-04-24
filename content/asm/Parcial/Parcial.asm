@@ -41,8 +41,8 @@ inicio:
     ldi temp, 0x03             ; Habilitar resistencias pull-ups en PD0 y PD1
     out PORTD, temp
 
-    ; Configurar interrupciones y Timer0
-    ldi temp, 0x0A             ; Flanco descendente para INT0 e INT1
+    ; Configurar interrupciones y Timer0  
+    ldi temp, 0x0A             ; Flanco descendente para INT0 e INT1 (1010)
     sts EICRA, temp
     ldi temp, 0x03             ; Habilitar INT0 e INT1
     out EIMSK, temp
@@ -65,7 +65,7 @@ inicio:
     rjmp bucle_principal
 
 bucle_principal:
-    rcall actualizar_display
+    rcall actualizar_display   ; LLamamos continuamente a la rutina de actualización del display
     rjmp bucle_principal
 
 ; --- Rutina para ambos botones ---
@@ -75,7 +75,7 @@ ISR_BOTON:
     push temp
     
     ; Anti-rebote
-    tst flag_antirebote
+    tst flag_antirebote     ; Verificamos 
     brne fin_isr_boton
     
     ; Guardar valor en EEPROM

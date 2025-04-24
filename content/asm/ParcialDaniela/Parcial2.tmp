@@ -1,0 +1,59 @@
+<ASSEMBLER_INFO>
+ <VERSION>2.2.8</VERSION>
+ <DEVICE>"ATmega2560"</DEVICE>
+ <WORKING_DIR>C:\Users\USUARIO\Documents\Universidad\Septimo Semestre\Micros\2560-2025\content\asm\ParcialDaniela</WORKING_DIR>
+ <INCLUDE_PATH>
+  <DIR>C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.7.374/avrasm/inc</DIR>
+  <DIR>C:/Program Files (x86)/Atmel/Studio/7.0/toolchain/avr8/avrassembler/Include</DIR>
+  <DIR></DIR>
+ </INCLUDE_PATH>
+ <SOURCE_FILE>Parcial2.asm</SOURCE_FILE>
+ <INCLUDED_FILES>
+  <FILE>C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.7.374/avrasm/inc\m2560def.inc</FILE>
+ </INCLUDED_FILES>
+ <OBJECT_FILES>
+  <FILE>Parcial2.obj</FILE>
+ </OBJECT_FILES>
+ <HEX_FILES>
+  <FILE>Parcial2.hex</FILE>
+ </HEX_FILES>
+ <OUTPUT_FILES>
+  <FILE>Parcial2.map</FILE>
+  <FILE>Parcial2.lss</FILE>
+ </OUTPUT_FILES>
+ <LABELS>
+  <inicio><FILE>Parcial2.asm</FILE><LINE>78</LINE></inicio>
+  <ISR_BTN_AUMENTAR><FILE>Parcial2.asm</FILE><LINE>356</LINE></ISR_BTN_AUMENTAR>
+  <ISR_BTN_DISMINUIR><FILE>Parcial2.asm</FILE><LINE>396</LINE></ISR_BTN_DISMINUIR>
+  <ISR_BTN_SELEC><FILE>Parcial2.asm</FILE><LINE>436</LINE></ISR_BTN_SELEC>
+  <ISR_BTN_RESET><FILE>Parcial2.asm</FILE><LINE>456</LINE></ISR_BTN_RESET>
+  <ISR_TMR0><FILE>Parcial2.asm</FILE><LINE>285</LINE></ISR_TMR0>
+  <leer_configuracion><FILE>Parcial2.asm</FILE><LINE>134</LINE></leer_configuracion>
+  <bucle_principal><FILE>Parcial2.asm</FILE><LINE>129</LINE></bucle_principal>
+  <actualizar_display><FILE>Parcial2.asm</FILE><LINE>213</LINE></actualizar_display>
+  <tiempo_ok_min><FILE>Parcial2.asm</FILE><LINE>148</LINE></tiempo_ok_min>
+  <tiempo_ok_max><FILE>Parcial2.asm</FILE><LINE>152</LINE></tiempo_ok_max>
+  <cantidad_ok_min><FILE>Parcial2.asm</FILE><LINE>167</LINE></cantidad_ok_min>
+  <cantidad_ok_max><FILE>Parcial2.asm</FILE><LINE>172</LINE></cantidad_ok_max>
+  <guardar_configuracion><FILE>Parcial2.asm</FILE><LINE>179</LINE></guardar_configuracion>
+  <guardar_tiempo_espera><FILE>Parcial2.asm</FILE><LINE>189</LINE></guardar_tiempo_espera>
+  <reset_valores><FILE>Parcial2.asm</FILE><LINE>204</LINE></reset_valores>
+  <mostrar_dosificacion><FILE>Parcial2.asm</FILE><LINE>222</LINE></mostrar_dosificacion>
+  <continuar_display><FILE>Parcial2.asm</FILE><LINE>226</LINE></continuar_display>
+  <sin_parpadeo><FILE>Parcial2.asm</FILE><LINE>258</LINE></sin_parpadeo>
+  <hacer_parpadeo><FILE>Parcial2.asm</FILE><LINE>243</LINE></hacer_parpadeo>
+  <check_modo2><FILE>Parcial2.asm</FILE><LINE>251</LINE></check_modo2>
+  <Tabla_Display><FILE>Parcial2.asm</FILE><LINE>479</LINE></Tabla_Display>
+  <sin_antirebote><FILE>Parcial2.asm</FILE><LINE>295</LINE></sin_antirebote>
+  <fin_tmr0><FILE>Parcial2.asm</FILE><LINE>349</LINE></fin_tmr0>
+  <estado_dosificacion><FILE>Parcial2.asm</FILE><LINE>319</LINE></estado_dosificacion>
+  <check_cantidad><FILE>Parcial2.asm</FILE><LINE>331</LINE></check_cantidad>
+  <dosificacion_completa><FILE>Parcial2.asm</FILE><LINE>338</LINE></dosificacion_completa>
+  <fin_btn_aumentar><FILE>Parcial2.asm</FILE><LINE>389</LINE></fin_btn_aumentar>
+  <config_cantidad_aumentar><FILE>Parcial2.asm</FILE><LINE>382</LINE></config_cantidad_aumentar>
+  <fin_btn_disminuir><FILE>Parcial2.asm</FILE><LINE>429</LINE></fin_btn_disminuir>
+  <config_cantidad_disminuir><FILE>Parcial2.asm</FILE><LINE>422</LINE></config_cantidad_disminuir>
+  <fin_btn_selec><FILE>Parcial2.asm</FILE><LINE>452</LINE></fin_btn_selec>
+  <fin_btn_reset><FILE>Parcial2.asm</FILE><LINE>469</LINE></fin_btn_reset>
+ </LABELS>
+</ASSEMBLER_INFO>
